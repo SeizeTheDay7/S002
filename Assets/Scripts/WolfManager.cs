@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class WolfManager : MonoBehaviour
 {
-    [SerializeField] GameObject sheep;
     [SerializeField] GameObject wolf_prefab;
     [SerializeField] private float boundary;
+    [SerializeField] private float wolfSpeed = 10f;
+    [SerializeField] private float wolfDealyTime = 2f;
+    [HideInInspector] public float chaseDuration = 0f;
+    [HideInInspector] public int wolfAmount = 1;
+
     private bool isWolfReady = true;
-    private float wolfDealyTime = 2f;
     private List<GameObject> wolfPool = new List<GameObject>();
     private Coroutine coolDownCoroutine;
 
@@ -35,20 +38,27 @@ public class WolfManager : MonoBehaviour
     private void AddWolfToGame()
     {
         coolDownCoroutine = StartCoroutine(WolfCoolDown());
-        foreach (GameObject wolf in wolfPool)
+        for (int i = 0; i < wolfAmount; i++)
         {
-            if (!wolf.activeInHierarchy)
+            bool foundWolf = false;
+            foreach (GameObject wolf in wolfPool)
             {
-                ChaseSheep(wolf);
-                wolf.SetActive(true);
-                return;
+                if (!wolf.activeInHierarchy)
+                {
+                    InitWolf(wolf);
+                    wolf.SetActive(true);
+                    foundWolf = true;
+                    break;
+                }
+            }
+            // If there's no free wolf, make new wolf
+            if (!foundWolf)
+            {
+                GameObject newWolf = MakeNewWolf();
+                InitWolf(newWolf);
+                wolfPool.Add(newWolf);
             }
         }
-
-        // If there's no available wolf, make new wolf
-        GameObject newWolf = MakeNewWolf();
-        ChaseSheep(newWolf);
-        wolfPool.Add(newWolf);
     }
 
     private IEnumerator WolfCoolDown()
@@ -58,10 +68,9 @@ public class WolfManager : MonoBehaviour
         isWolfReady = true;
     }
 
-    private void ChaseSheep(GameObject wolf)
+    private void InitWolf(GameObject wolf)
     {
-        wolf.transform.position = GetRandomPos();
-        wolf.GetComponent<Wolf>().ChaseSheep(sheep.transform.position, boundary);
+        wolf.GetComponent<Wolf>().InitWolf(GetRandomPos(), wolfSpeed, chaseDuration, boundary);
     }
 
     private Vector3 GetRandomPos()
@@ -90,6 +99,7 @@ public class WolfManager : MonoBehaviour
             coolDownCoroutine = null;
         }
         isWolfReady = true;
-        wolfDealyTime = 2f;
+        wolfAmount = 1;
+        chaseDuration = 0;
     }
 }
