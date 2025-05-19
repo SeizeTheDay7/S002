@@ -77,7 +77,7 @@ public class SheepStat : MonoBehaviour
 
     private void UpdateUI_Score()
     {
-        text_score.text = "Score " + score;
+        text_score.text = "Grass " + score;
     }
 
     private void TryLevelUp()
@@ -165,6 +165,7 @@ public class SheepStat : MonoBehaviour
 
     private void SetHPUI(int currentHP)
     {
+        if (currentHP < 0) currentHP = 0;
         for (int i = 0; i < currentHP; i++)
         {
             UI_Hearts[i].SetActive(true);

@@ -119,4 +119,13 @@ public class SheepMove : MonoBehaviour
         ps.Clear();
         tr.Clear();
     }
+
+    public void EndGame()
+    {
+        tr.Clear();
+        tr.enabled = false;
+
+        rb.linearVelocity = Vector2.zero;
+        enabled = false;
+    }
 }

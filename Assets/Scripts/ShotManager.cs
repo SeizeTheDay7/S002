@@ -8,13 +8,15 @@ public class ShotManager : MonoBehaviour
     [SerializeField] private float boundary;
     [SerializeField] private GameObject shot_prefab;
     [SerializeField] private float shotDelay = 1.5f;
-    [SerializeField] private float reloadTime = 2f;
-    private List<GameObject> shotPool;
+    [SerializeField] private float reloadTime_base = 4f;
+    [SerializeField] private float bulletSpeed = 20f;
+    private List<GameObject> shotPool = new List<GameObject>();
     bool shotReady = true;
-    Coroutine currentCoroutine;
+    [HideInInspector] public float reloadTime;
 
-    void Start()
+    void Awake()
     {
+        reloadTime = reloadTime_base;
         for (int i = 0; i < 5; i++)
         {
             shotPool.Add(MakeNewBullet());
@@ -32,17 +34,40 @@ public class ShotManager : MonoBehaviour
     {
         if (shotReady)
         {
-            currentCoroutine = StartCoroutine(ShotCoroutine());
+            AddShotToGame();
         }
     }
 
-    private IEnumerator ShotCoroutine()
+    private void AddShotToGame()
+    {
+        StartCoroutine(ShotCoolDown());
+
+        foreach (GameObject shot in shotPool)
+        {
+            if (!shot.activeInHierarchy)
+            {
+                InitShot(shot);
+                return;
+            }
+        }
+
+        // If there's no available shot, make new shot
+        GameObject newShot = MakeNewBullet();
+        shotPool.Add(newShot);
+        InitShot(newShot);
+    }
+
+    private IEnumerator ShotCoolDown()
     {
         shotReady = false;
-        yield return new WaitForSeconds(shotDelay);
-        // ShotBullet();
         yield return new WaitForSeconds(reloadTime);
         shotReady = true;
+    }
+
+    private void InitShot(GameObject shot)
+    {
+        shot.SetActive(true);
+        shot.GetComponent<Shot>().ReadyShot(GetRandomPos(), shotDelay, sheep, bulletSpeed);
     }
 
     private Vector3 GetRandomPos()
@@ -60,11 +85,19 @@ public class ShotManager : MonoBehaviour
 
     public void Reset()
     {
-        if (currentCoroutine != null)
+        foreach (GameObject shot in shotPool)
         {
-            StopCoroutine(currentCoroutine);
-            currentCoroutine = null;
+            shot.SetActive(false);
         }
+        StopAllCoroutines();
         shotReady = true;
+        reloadTime = reloadTime_base;
+
+        enabled = false;
+    }
+
+    public void EndGame()
+    {
+        Reset();
     }
 }

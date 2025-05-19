@@ -3,11 +3,15 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private GameObject restart;
+    [SerializeField] private GameObject inGameUI;
+    [SerializeField] private GameEndSequence gameEndSequence;
+    [SerializeField] private Sheep sheep;
     [SerializeField] private SheepStat sheepStat;
     [SerializeField] private SheepMove sheepMove;
     [SerializeField] private SheepBarrier sheepAbility;
     [SerializeField] private WolfManager wolfManager;
     [SerializeField] private GrassManager grassManager;
+    [SerializeField] private ShotManager shotManager;
 
     public void PauseGame()
     {
@@ -39,6 +43,19 @@ public class GameManager : Singleton<GameManager>
         {
             wolfManager.wolfAmount = 3;
         }
+        else if (score == 60)
+        {
+            shotManager.enabled = true;
+        }
+        else if (score == 75)
+        {
+            shotManager.reloadTime /= 2;
+        }
+        else if (score == 1)
+        {
+            // sheepMove.EndGame();
+            EndGame();
+        }
     }
 
     public void RestartGame()
@@ -49,6 +66,18 @@ public class GameManager : Singleton<GameManager>
         sheepAbility.Reset();
         wolfManager.Reset();
         grassManager.Reset();
+        shotManager.Reset();
         ResumeGame();
+    }
+
+    private void EndGame()
+    {
+        inGameUI.SetActive(false);
+        sheep.EndGame();
+        sheepMove.EndGame();
+        wolfManager.EndGame();
+        shotManager.EndGame();
+        grassManager.EndGame();
+        gameEndSequence.PlayGameEndSequence();
     }
 }

@@ -13,7 +13,6 @@ public class WolfManager : MonoBehaviour
 
     private bool isWolfReady = true;
     private List<GameObject> wolfPool = new List<GameObject>();
-    private Coroutine coolDownCoroutine;
 
     void Start()
     {
@@ -37,7 +36,7 @@ public class WolfManager : MonoBehaviour
 
     private void AddWolfToGame()
     {
-        coolDownCoroutine = StartCoroutine(WolfCoolDown());
+        StartCoroutine(WolfCoolDown());
         for (int i = 0; i < wolfAmount; i++)
         {
             bool foundWolf = false;
@@ -93,13 +92,17 @@ public class WolfManager : MonoBehaviour
             wolf.SetActive(false);
             wolf.GetComponent<Wolf>().Reset();
         }
-        if (coolDownCoroutine != null)
-        {
-            StopCoroutine(coolDownCoroutine);
-            coolDownCoroutine = null;
-        }
+
+        StopAllCoroutines();
+
         isWolfReady = true;
         wolfAmount = 1;
         chaseDuration = 0;
+    }
+
+    public void EndGame()
+    {
+        Reset();
+        enabled = false;
     }
 }

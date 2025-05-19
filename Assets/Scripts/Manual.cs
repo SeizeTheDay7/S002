@@ -4,6 +4,7 @@ public class Manual : MonoBehaviour
 {
     bool doneKeyboard;
     bool doneMouse;
+    [SerializeField] bool debugMode = true;
     [SerializeField] GameObject keyboardSign;
     [SerializeField] GameObject mouseSign;
     [SerializeField] GameObject sheep;
@@ -31,7 +32,7 @@ public class Manual : MonoBehaviour
         {
             PressEnterText.SetActive(true);
         }
-        if (doneKeyboard && doneMouse && Input.GetKeyDown(KeyCode.Return))
+        if ((doneKeyboard && doneMouse && Input.GetKeyDown(KeyCode.Return)) || debugMode)
         {
             sheep.SetActive(true);
             score_UI.SetActive(true);

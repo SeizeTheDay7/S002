@@ -9,7 +9,6 @@ public class GrassManager : MonoBehaviour
     [SerializeField] private float boundary;
     private float grassDelayTime = 2f;
     bool isGrassReady = true;
-    private Coroutine coolDownCoroutine;
 
     void Start()
     {
@@ -33,13 +32,13 @@ public class GrassManager : MonoBehaviour
 
     private void AddGrassToGame()
     {
-        coolDownCoroutine = StartCoroutine(GrassCoolDown());
+        StartCoroutine(GrassCoolDown());
         foreach (GameObject grass in grassPool)
         {
             if (!grass.activeInHierarchy)
             {
-                grass.SetActive(true);
                 PositionGrass(grass);
+                grass.SetActive(true);
                 return;
             }
         }
@@ -99,11 +98,12 @@ public class GrassManager : MonoBehaviour
         {
             grass.SetActive(false);
         }
-        if (coolDownCoroutine != null)
-        {
-            StopCoroutine(coolDownCoroutine);
-            coolDownCoroutine = null;
-        }
+        StopAllCoroutines();
         isGrassReady = true;
+    }
+
+    public void EndGame()
+    {
+        enabled = false;
     }
 }
