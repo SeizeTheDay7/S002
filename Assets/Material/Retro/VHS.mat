@@ -41,9 +41,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Bleed: 4.63
+    - _Bleed: 1.61
     - _EnableExternalAlpha: 0
-    - _JitterAmp: 0.3
+    - _JitterAmp: 0.09
     - _NoiseAmp: 0.15
     - _ScanPower: 1
     - _TimeScale: 2.1

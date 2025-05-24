@@ -27,9 +27,12 @@ public class SheepStat : MonoBehaviour
     [HideInInspector] public float eating_delay;
     [HideInInspector] public float barrier_coolTime;
 
+    [Header("Hard Mode")]
+    [SerializeField] SheepStatContainer hardModeStat;
+
     [Header("Level")]
     [SerializeField] int exp_required_base = 5;
-    [SerializeField] int exp_required_multiplier = 3;
+    [SerializeField] int exp_required_multiplier = 5;
     [SerializeField] TextMeshProUGUI valueUI_leg;
     [SerializeField] TextMeshProUGUI valueUI_teeth;
     [SerializeField] TextMeshProUGUI valueUI_bleat;
@@ -63,6 +66,14 @@ public class SheepStat : MonoBehaviour
         for (int i = 0; i < 12; i++) UI_Hearts.Add(Instantiate(heart_prefab, HP_Parent));
         sr = GetComponent<SpriteRenderer>();
         Reset();
+    }
+
+    public void EnterHardMode()
+    {
+        this.speed_normal_base = hardModeStat.speed_normal_base;
+        this.eating_delay_base = hardModeStat.eating_delay_base;
+        this.barrier_coolTime_base = hardModeStat.barrier_coolTime_base;
+        this.barrierCoolTimeMultiplier = hardModeStat.barrierCoolTimeMultiplier;
     }
 
     #region EXP & Lvl Up

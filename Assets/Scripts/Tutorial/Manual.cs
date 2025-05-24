@@ -34,13 +34,16 @@ public class Manual : MonoBehaviour
         }
         if ((doneKeyboard && doneMouse && Input.GetKeyDown(KeyCode.Return)) || debugMode)
         {
-            sheep.SetActive(true);
-            score_UI.SetActive(true);
-            shield_UI.SetActive(true);
-            gameManager.SetActive(true);
-            Destroy(gameObject);
+            StartGame();
         }
     }
 
-
+    public void StartGame()
+    {
+        sheep.SetActive(true);
+        score_UI.SetActive(true);
+        shield_UI.SetActive(true);
+        gameManager.SetActive(true);
+        gameObject.SetActive(false);
+    }
 }

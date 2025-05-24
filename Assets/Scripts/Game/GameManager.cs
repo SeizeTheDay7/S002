@@ -29,6 +29,12 @@ public class GameManager : Singleton<GameManager>
         restart.SetActive(true);
     }
 
+    public void EnterHardMode()
+    {
+        sheepStat.EnterHardMode();
+        wolfManager.EnterHardMode();
+    }
+
     public void BalanceGame(int score)
     {
         if (score == 15)

@@ -22,6 +22,11 @@ public class WolfManager : MonoBehaviour
         }
     }
 
+    public void EnterHardMode()
+    {
+        wolfSpeed = 10f;
+    }
+
     private GameObject MakeNewWolf()
     {
         GameObject newWolf = Instantiate(wolf_prefab);

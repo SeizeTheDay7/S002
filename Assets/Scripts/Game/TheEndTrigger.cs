@@ -21,5 +21,8 @@ public class TheEndTrigger : MonoBehaviour
         yield return new WaitForSeconds(5f);
         print("Quit");
         Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }
