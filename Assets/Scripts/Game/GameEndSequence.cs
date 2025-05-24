@@ -4,6 +4,8 @@ using System.Collections;
 public class GameEndSequence : MonoBehaviour
 {
     [SerializeField] SheepMoveGameEnd sheepMoveGameEnd;
+    [SerializeField] SheepBarrier sheepBarrierScript;
+    [SerializeField] GameObject sheepBarrier;
     [SerializeField] GameObject exitFence;
     [SerializeField] GameObject exitTrigger;
 
@@ -14,6 +16,8 @@ public class GameEndSequence : MonoBehaviour
 
     private IEnumerator GameEndCoroutine()
     {
+        sheepBarrier.SetActive(false);
+        sheepBarrierScript.enabled = false;
         yield return new WaitForSeconds(2f);
         exitFence.SetActive(false);
         exitTrigger.SetActive(true);

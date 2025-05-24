@@ -83,6 +83,7 @@ public class SheepStat : MonoBehaviour
     private void TryLevelUp()
     {
         if (exp < exp_required) return;
+        if (score >= 100) return;
         GameManager.Instance.PauseGame();
 
         LevelUpPanel.SetActive(true);

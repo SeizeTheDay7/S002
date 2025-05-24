@@ -12,10 +12,8 @@ public class Sheep2Dto3D : MonoBehaviour
     {
         print("Sheep2Dto3D");
         if (isCoolTime) return;
-        sheep_3d.SetActive(true);
         sheep_2d.SetActive(false);
-        movepanel.fadeOutPanel();
-        StartCoroutine(sheep3Dto2D.CoolTime());
+        StartCoroutine(movepanel.fadeOutPanel(sheep_3d, sheep3Dto2D));
     }
 
     public IEnumerator CoolTime()

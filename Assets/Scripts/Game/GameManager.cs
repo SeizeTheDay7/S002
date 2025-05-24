@@ -51,9 +51,8 @@ public class GameManager : Singleton<GameManager>
         {
             shotManager.reloadTime /= 2;
         }
-        else if (score == 1)
+        else if (score == 100)
         {
-            // sheepMove.EndGame();
             EndGame();
         }
     }
