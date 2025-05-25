@@ -68,6 +68,7 @@ public class ShotManager : MonoBehaviour
     {
         shot.SetActive(true);
         shot.GetComponent<Shot>().ReadyShot(GetRandomPos(), shotDelay, sheep, bulletSpeed);
+        SoundManager.Instance.ShotSfx();
     }
 
     private Vector3 GetRandomPos()

@@ -12,20 +12,32 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private WolfManager wolfManager;
     [SerializeField] private GrassManager grassManager;
     [SerializeField] private ShotManager shotManager;
+    SoundManager soundManager;
+
+    void Start()
+    {
+        soundManager = SoundManager.Instance;
+    }
 
     public void PauseGame()
     {
+        soundManager.PauseAllSound();
+        soundManager.BGMAudioSource.volume = 0.5f;
         Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
+        soundManager.ResumeAllSound();
+        soundManager.BGMAudioSource.volume = 1f;
         Time.timeScale = 1f;
     }
 
     public void GameOver()
     {
+        soundManager.StopAllSound();
         PauseGame();
+        soundManager.GameOverSfx();
         restart.SetActive(true);
     }
 
@@ -49,7 +61,7 @@ public class GameManager : Singleton<GameManager>
         {
             wolfManager.wolfAmount = 3;
         }
-        else if (score == 60)
+        else if (score == 60) // 60
         {
             shotManager.enabled = true;
         }
@@ -57,7 +69,7 @@ public class GameManager : Singleton<GameManager>
         {
             shotManager.reloadTime /= 2;
         }
-        else if (score == 100)
+        else if (score == 1)
         {
             EndGame();
         }
@@ -65,6 +77,7 @@ public class GameManager : Singleton<GameManager>
 
     public void RestartGame()
     {
+        soundManager.PlayBGM();
         restart.SetActive(false);
         sheepStat.Reset();
         sheepMove.Reset();
@@ -77,6 +90,7 @@ public class GameManager : Singleton<GameManager>
 
     private void EndGame()
     {
+        soundManager.StopBGM();
         inGameUI.SetActive(false);
         sheep.EndGame();
         sheepMove.EndGame();

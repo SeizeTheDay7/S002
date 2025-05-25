@@ -74,6 +74,7 @@ public class WolfManager : MonoBehaviour
 
     private void InitWolf(GameObject wolf)
     {
+        SoundManager.Instance.BarkSfx();
         wolf.GetComponent<Wolf>().InitWolf(GetRandomPos(), wolfSpeed, chaseDuration, boundary);
     }
 

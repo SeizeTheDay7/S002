@@ -20,6 +20,7 @@ public class GameEndSequence : MonoBehaviour
         sheepBarrierScript.enabled = false;
         yield return new WaitForSeconds(2f);
         exitFence.SetActive(false);
+        SoundManager.Instance.OpenDoorSfx();
         exitTrigger.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         sheepMoveGameEnd.enabled = true;

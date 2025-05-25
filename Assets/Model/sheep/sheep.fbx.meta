@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2086583c9ed513240a3f8f2a9f405671
+guid: e36a6bc482bbfeb4eba6beb75145cf67
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,18 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Eyes_Feet
-    second: {fileID: 2100000, guid: 7f4af74ad987d334eac956f6727388bf, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Fur
-    second: {fileID: 2100000, guid: 8d34cbe8833dab146bba54064b026c8e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Skin
-    second: {fileID: 2100000, guid: 048a5b87ced311245856c0b2c2cb789c, type: 2}
+      name: TexMap
+    second: {fileID: 2100000, guid: 47f621b71f0a34d44a547997e678b4af, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

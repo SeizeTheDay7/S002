@@ -12,6 +12,7 @@ public class SheepMove : MonoBehaviour
     ParticleSystem ps;
     TrailRenderer tr;
     Coroutine eatingCoroutine;
+    AudioSource eatingAudioSource;
 
     void Start()
     {
@@ -48,6 +49,11 @@ public class SheepMove : MonoBehaviour
 
                     StopCoroutine(eatingCoroutine);
                     eatingCoroutine = null;
+                    if (eatingAudioSource != null)
+                    {
+                        eatingAudioSource.Stop();
+                        eatingAudioSource = null;
+                    }
                 }
                 rb.linearVelocity = input.normalized * moving_speed;
                 StartCoroutine(waitingOtherClick(input));
@@ -75,6 +81,8 @@ public class SheepMove : MonoBehaviour
     public void EatingGrass(GameObject grass)
     {
         if (eatingCoroutine != null) return;
+
+        eatingAudioSource = SoundManager.Instance.EatSfx(stat.eating_delay);
 
         moving_speed = stat.speed_eating;
         if (!ps.isPlaying)

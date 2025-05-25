@@ -42,6 +42,7 @@ public class SheepStat : MonoBehaviour
     [SerializeField] private float invincible_duration_hit = 1f;
     [SerializeField] private float hitAlpha = 0.75f;
     private SpriteRenderer sr;
+    private TrailRenderer tr;
     public bool canHit;
     private int hitCount;
 
@@ -60,12 +61,19 @@ public class SheepStat : MonoBehaviour
 
 
     Coroutine invincibleCoroutine;
+    SoundManager soundManager;
 
     void Awake()
     {
         for (int i = 0; i < 12; i++) UI_Hearts.Add(Instantiate(heart_prefab, HP_Parent));
         sr = GetComponent<SpriteRenderer>();
+        tr = GetComponent<TrailRenderer>();
         Reset();
+    }
+
+    void Start()
+    {
+        soundManager = SoundManager.Instance;
     }
 
     public void EnterHardMode()
@@ -121,6 +129,8 @@ public class SheepStat : MonoBehaviour
         max_hp = hp_base + (lvl_components["fur"] - 1);
         barrier_coolTime = barrier_coolTime_base - barrierCoolTimeMultiplier * (lvl_components["bleat"] - 1);
 
+        tr.time = 0.2f + 0.04f * (lvl_components["leg"] - 1);
+
         SetHPUI(max_hp - hitCount);
         UpdateUI_Lvl();
     }
@@ -149,9 +159,11 @@ public class SheepStat : MonoBehaviour
 
         if (hitCount >= max_hp)
         {
+            // TODO :: soundManager.GameOverSfx();
             GameManager.Instance.GameOver();
             return;
         }
+        soundManager.HitSfx();
         invincibleCoroutine = StartCoroutine(HitInvincible());
     }
 

@@ -6,7 +6,7 @@ public class SheepMove3D : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] float turnSpeed;
     CharacterController cc;
-    bool turning;
+    public bool turning;
     bool isRight = true;
 
     void Start()

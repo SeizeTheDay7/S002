@@ -10,11 +10,19 @@ public class ChangeDimensionMovePanel : MonoBehaviour
     [SerializeField] RectTransform panel_1;
     [SerializeField] RectTransform panel_2;
     [SerializeField] GameObject world_3d;
+    SoundManager soundManager;
+
+    void Start()
+    {
+        soundManager = SoundManager.Instance;
+    }
 
 
-    public IEnumerator fadeOutPanel(GameObject sheep_3d, Sheep3Dto2D sheep3Dto2D)
+    public IEnumerator GetOutPanel(GameObject sheep_3d, Sheep3Dto2D sheep3Dto2D)
     {
         StopAllCoroutines();
+        soundManager.ThirdWorldBGMFadeIn(brain.DefaultBlend.Time);
+        yield return new WaitForSeconds(2f);
 
         vcam2D.Priority = 0;
         vcam3D.Priority = 10;
@@ -24,14 +32,17 @@ public class ChangeDimensionMovePanel : MonoBehaviour
         StartCoroutine(AnimatePanel(panel_1, panel_1.anchoredPosition.x, -panel_1.rect.width, blendTime));   // 왼쪽으로
         StartCoroutine(AnimatePanel(panel_2, panel_2.anchoredPosition.x, panel_2.rect.width, blendTime));    // 오른쪽으로
         yield return new WaitForSeconds(blendTime);
+        sheep_3d.GetComponent<SheepMove3D>().turning = false;
+        sheep_3d.transform.rotation = Quaternion.Euler(0, 90, 0);
         sheep_3d.SetActive(true);
         StartCoroutine(sheep3Dto2D.CoolTime());
     }
 
-    public IEnumerator fadeInPanel(GameObject sheep_2d, Sheep2Dto3D sheep2Dto3D)
+    public IEnumerator GetInPanel(GameObject sheep_2d, Sheep2Dto3D sheep2Dto3D)
     {
         StopAllCoroutines();
-
+        brain.DefaultBlend.Time = 2f;
+        soundManager.ThirdWorldBGMFadeOut(brain.DefaultBlend.Time);
         vcam2D.Priority = 10;
         vcam3D.Priority = 0;
 

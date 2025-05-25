@@ -40,6 +40,7 @@ public class Manual : MonoBehaviour
 
     public void StartGame()
     {
+        SoundManager.Instance.InGameBGM();
         sheep.SetActive(true);
         score_UI.SetActive(true);
         shield_UI.SetActive(true);

@@ -6,6 +6,7 @@ public class Sheep : Singleton<Sheep>
     [SerializeField] SheepStat sheepStat;
     private System.Action<Collider2D> triggerHandler;
 
+
     void Start()
     {
         triggerHandler = DefaultTriggerHandler;
