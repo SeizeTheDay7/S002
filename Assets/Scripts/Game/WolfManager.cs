@@ -10,6 +10,7 @@ public class WolfManager : MonoBehaviour
     [SerializeField] private float wolfDealyTime = 2f;
     [HideInInspector] public float chaseDuration = 0f;
     [HideInInspector] public int wolfAmount = 1;
+    SoundManager soundManager;
 
     private bool isWolfReady = true;
     private List<GameObject> wolfPool = new List<GameObject>();
@@ -20,6 +21,8 @@ public class WolfManager : MonoBehaviour
         {
             wolfPool.Add(MakeNewWolf());
         }
+
+        soundManager = SoundManager.Instance;
     }
 
     public void EnterHardMode()
@@ -74,7 +77,7 @@ public class WolfManager : MonoBehaviour
 
     private void InitWolf(GameObject wolf)
     {
-        SoundManager.Instance.BarkSfx();
+        soundManager.BarkSfx();
         wolf.GetComponent<Wolf>().InitWolf(GetRandomPos(), wolfSpeed, chaseDuration, boundary);
     }
 

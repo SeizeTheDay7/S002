@@ -13,6 +13,7 @@ public class ShotManager : MonoBehaviour
     private List<GameObject> shotPool = new List<GameObject>();
     bool shotReady = true;
     [HideInInspector] public float reloadTime;
+    SoundManager soundManager;
 
     void Awake()
     {
@@ -21,6 +22,11 @@ public class ShotManager : MonoBehaviour
         {
             shotPool.Add(MakeNewBullet());
         }
+    }
+
+    void Start()
+    {
+        soundManager = SoundManager.Instance;
     }
 
     private GameObject MakeNewBullet()
@@ -68,7 +74,7 @@ public class ShotManager : MonoBehaviour
     {
         shot.SetActive(true);
         shot.GetComponent<Shot>().ReadyShot(GetRandomPos(), shotDelay, sheep, bulletSpeed);
-        SoundManager.Instance.ShotSfx();
+        soundManager.ShotSfx();
     }
 
     private Vector3 GetRandomPos()

@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 40279777}
   m_Layer: 6
   m_Name: Sheep
-  m_TagString: Untagged
+  m_TagString: Sheep
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5329,7 +5329,7 @@ MonoBehaviour:
   speed_normal_base: 10
   speed_eating: 0.1
   eating_delay_base: 0.5
-  barrier_coolTime_base: 7
+  barrier_coolTime_base: 6.8
   moveSpeedLvlMultiplier: 0.5
   eatingDelayLvlMultiplier: 0.05
   barrierCoolTimeMultiplier: 0.68
@@ -23670,6 +23670,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 32f3b5ece85650944a7f83761bee463d, type: 3}
   - {fileID: 8300000, guid: 30b654badfbd6354cb172b583df1a22a, type: 3}
   sfx_OpenDoor: {fileID: 8300000, guid: 7ff19211d02d39646b9eb5231af6eca4, type: 3}
+  sfx_Bleat: {fileID: 8300000, guid: f77e6162949eb864eb8a6229fac4b1e3, type: 3}
   poolSize: 10
   BGMAudioSource: {fileID: 0}
 --- !u!1 &2137687479

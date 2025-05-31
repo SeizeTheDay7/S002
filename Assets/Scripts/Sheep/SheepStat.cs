@@ -159,7 +159,6 @@ public class SheepStat : MonoBehaviour
 
         if (hitCount >= max_hp)
         {
-            // TODO :: soundManager.GameOverSfx();
             GameManager.Instance.GameOver();
             return;
         }

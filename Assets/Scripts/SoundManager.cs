@@ -19,6 +19,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] AudioClip sfx_Eat;
     [SerializeField] AudioClip[] sfx_barks;
     [SerializeField] AudioClip sfx_OpenDoor;
+    [SerializeField] AudioClip sfx_Bleat;
     List<AudioSource> audioSources = new List<AudioSource>();
     [SerializeField] private int poolSize = 10;
     [HideInInspector] public AudioSource BGMAudioSource;
@@ -84,12 +85,13 @@ public class SoundManager : Singleton<SoundManager>
         BGMAudioSource.DOFade(0f, blendTime).SetEase(Ease.InOutQuad).OnComplete(() => { BGMAudioSource.Stop(); });
     }
 
-    public void ClickSfx() { PlayAudio(sfx_Click); }
-    public void GameOverSfx() { PlayAudio(sfx_GameOver); }
+    public void ClickSfx() { PlayInGameAudio(sfx_Click); }
+    public void GameOverSfx() { PlayInGameAudio(sfx_GameOver); }
+    public void HitSfx() { PlayInGameAudio(sfx_Hit); }
+    public void ShotSfx() { PlayInGameAudio(sfx_Shot); }
+    public void BarkSfx() { PlayInGameAudio(sfx_barks[Random.Range(0, sfx_barks.Length)]); }
+    public void BleatSfx() { PlayInGameAudio(sfx_Bleat); }
 
-    public void HitSfx() { PlayAudio(sfx_Hit); }
-    public void ShotSfx() { PlayAudio(sfx_Shot); }
-    public void BarkSfx() { PlayAudio(sfx_barks[Random.Range(0, sfx_barks.Length)]); }
     public AudioSource EatSfx(float eating_delay)
     {
         AudioSource source = GetAudioSource();
@@ -100,14 +102,19 @@ public class SoundManager : Singleton<SoundManager>
         return source;
     }
 
-    public void OpenDoorSfx() { PlayAudio(sfx_OpenDoor); }
+    public void OpenDoorSfx()
+    {
+        AudioSource source = GetAudioSource();
+        source.loop = false;
+        source.clip = sfx_OpenDoor;
+        source.Play();
+    }
 
     public void StopAllSound()
     {
         foreach (var source in audioSources)
         {
-            if (source.isPlaying)
-                source.Stop();
+            source.Stop();
         }
     }
 
@@ -115,8 +122,7 @@ public class SoundManager : Singleton<SoundManager>
     {
         foreach (var source in audioSources)
         {
-            if (source.isPlaying)
-                source.Pause();
+            source.Pause();
         }
     }
 
@@ -124,17 +130,18 @@ public class SoundManager : Singleton<SoundManager>
     {
         foreach (var source in audioSources)
         {
-            if (!source.isPlaying)
-                source.UnPause();
+            source.UnPause();
         }
     }
 
-    private void PlayAudio(AudioClip audioClip)
+    private void PlayInGameAudio(AudioClip audioClip)
     {
+        if (!BGMAudioSource.isPlaying) return;
         AudioSource source = GetAudioSource();
         source.loop = false;
         source.pitch = 1f;
         source.clip = audioClip;
         source.Play();
+        if (Time.deltaTime == 0) source.Pause();
     }
 }

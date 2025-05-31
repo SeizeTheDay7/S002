@@ -61,7 +61,7 @@ public class GameManager : Singleton<GameManager>
         {
             wolfManager.wolfAmount = 3;
         }
-        else if (score == 60) // 60
+        else if (score == 60)
         {
             shotManager.enabled = true;
         }
@@ -69,7 +69,7 @@ public class GameManager : Singleton<GameManager>
         {
             shotManager.reloadTime /= 2;
         }
-        else if (score == 1)
+        else if (score == 100)
         {
             EndGame();
         }
@@ -91,6 +91,7 @@ public class GameManager : Singleton<GameManager>
     private void EndGame()
     {
         soundManager.StopBGM();
+        soundManager.StopAllSound();
         inGameUI.SetActive(false);
         sheep.EndGame();
         sheepMove.EndGame();

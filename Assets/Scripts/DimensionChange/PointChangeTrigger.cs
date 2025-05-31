@@ -8,8 +8,11 @@ public class PointChangeTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        changeScript.MoveInto(point);
-        otherTrigger.SetActive(true);
-        gameObject.SetActive(false);
+        if (collision.gameObject.CompareTag("Sheep"))
+        {
+            changeScript.MoveInto(point);
+            otherTrigger.SetActive(true);
+            gameObject.SetActive(false);
+        }
     }
 }

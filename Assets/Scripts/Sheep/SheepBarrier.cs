@@ -9,10 +9,12 @@ public class SheepBarrier : MonoBehaviour
     [SerializeField] private GameObject barrier_UI;
     private bool canBarrier = true;
     private Coroutine barrierCoroutine;
+    SoundManager soundManager;
 
     void Start()
     {
         barrier_UI.SetActive(true);
+        soundManager = SoundManager.Instance;
     }
 
     void Update()
@@ -28,6 +30,7 @@ public class SheepBarrier : MonoBehaviour
 
     private IEnumerator Barrier()
     {
+        soundManager.BleatSfx();
         sheepStat.StopHitInvincible();
         sheepStat.canHit = false;
         barrier.SetActive(true);

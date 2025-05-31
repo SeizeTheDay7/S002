@@ -13,6 +13,7 @@ public class SheepMove : MonoBehaviour
     TrailRenderer tr;
     Coroutine eatingCoroutine;
     AudioSource eatingAudioSource;
+    SoundManager soundManager;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class SheepMove : MonoBehaviour
         ps = GetComponent<ParticleSystem>();
         tr = GetComponent<TrailRenderer>();
         moving_speed = stat.speed_normal;
+        soundManager = SoundManager.Instance;
     }
 
     void Update()
@@ -82,7 +84,7 @@ public class SheepMove : MonoBehaviour
     {
         if (eatingCoroutine != null) return;
 
-        eatingAudioSource = SoundManager.Instance.EatSfx(stat.eating_delay);
+        eatingAudioSource = soundManager.EatSfx(stat.eating_delay);
 
         moving_speed = stat.speed_eating;
         if (!ps.isPlaying)
